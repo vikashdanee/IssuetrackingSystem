@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container">
+
+    <form method="post" modelAttribute="user" th:action="@{/home/register}">
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="name">Full Name</label>
+                <input class="form-control" id="name" name="name" type="text">
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input class="form-control" id="email" name="email" placeholder="1234 Main St" type="text">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="password">Password</label>
+                <input class="form-control" id="password" name="password" type="password">
+            </div>
+        </div>
+
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="userType">User Type</label>
+                <select id="userType" name="userType">
+                    <option th:each="ut :${usertypes}" th:text="${ut}" th:value="${ut}"/>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</div>
+
+</body>
+</html>
