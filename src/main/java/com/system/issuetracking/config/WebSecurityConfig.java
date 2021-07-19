@@ -1,11 +1,15 @@
 package com.system.issuetracking.config;
 
+import com.system.issuetracking.user.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
@@ -14,22 +18,50 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
+
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /*http.authorizeRequests()
-                .antMatchers("/dashboard/*").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/static/js/**","/img/**","/home","/about","/contact","/services","/contact/**").permitAll()
+                .antMatchers("/users/**").hasAuthority("Admin")
+                .antMatchers("/issues/assigned").hasAuthority("User")
+                .antMatchers("/issues/in-progress").hasAuthority("User")
+                .antMatchers("/issues/completed").hasAuthority("User")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/dashboard")
                 .permitAll()
-                .defaultSuccessUrl("/home/get", true).and().logout();*/
+                .and().logout().logoutUrl("/logout")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**");
+        web.ignoring().antMatchers("/css/**","/js/**","/resources/**", "/error");
     }
 }

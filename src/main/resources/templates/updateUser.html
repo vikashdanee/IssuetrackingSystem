@@ -15,19 +15,18 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
-                <form method="post" th:object="${user}" th:action="@{/users/user}">
-
+                <form action="#" method="post" th:object="${user}" th:action="@{/users/update-user/{id}(id = ${user.id})}">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" name="email" type="text" required>
+                            <input class="form-control" id="email" th:field="*{email}" type="text" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="firstName">First Name</label>
-                            <input class="form-control" id="firstName" name="firstName" type="text" required minlength="2" maxlength="40">
+                            <input class="form-control" id="firstName" th:field="*{firstName}" type="text" required minlength="2" maxlength="40">
                         </div>
 
                     </div>
@@ -35,7 +34,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="lastName">Last Name</label>
-                            <input class="form-control" id="lastName" name="lastName" type="text" required minlength="2" maxlength="40">
+                            <input class="form-control" id="lastName" th:field="*{lastName}" type="text" required minlength="2" maxlength="40">
                         </div>
 
                     </div>
@@ -43,7 +42,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="designation">Designation</label>
-                            <input class="form-control" id="designation" name="designation" type="text" required minlength="2" maxlength="20">
+                            <input class="form-control" id="designation" th:field="*{designation}" type="text" required minlength="2" maxlength="20">
                         </div>
 
                     </div>
@@ -52,7 +51,7 @@
                         <div class="form-group col-md-6">
                             <label>User Role</label>
                             <div>
-                                <select class="select"  name="userRole">
+                                <select class="select"  th:field="*{userRole}">
                                     <option value="User">User</option>
                                     <option value="Admin">Admin</option>
                                 </select>
@@ -60,7 +59,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Register</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
                 </form>
             </div>
             <!-- content-wrapper ends -->
@@ -76,6 +75,7 @@
 </body>
 
 </html>
+
 
 
 

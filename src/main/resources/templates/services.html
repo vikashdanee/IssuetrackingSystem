@@ -1,85 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Issue Tracking System</title>
-    <!-- Bootstrap icons-->
-    <link href="../css/bootstrap.css" rel="stylesheet"/>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/styles.css" rel="stylesheet" />
-</head>
+<head th:replace="homefragment :: html_head"/>
 <body>
-<!-- Navigation-->
-<nav class="navbar navbar-light bg-light static-top">
-    <div class="container">
-        <a class="navbar-brand" href="#!">Issue Tracking System</a>
-        <a class="btn btn-primary" href="/login">Log In</a>
-    </div>
-</nav>
 
-<form action="index.html" class="contact">
-    <fieldset class="contact-inner">
-        <p class="contact-input">
-            <input type="text" name="name" placeholder="Your Name…" autofocus>
-        </p>
+<nav th:replace="homefragment :: header"/>
 
-        <p class="contact-input">
-            <label for="select" class="select">
-                <select name="subject" id="select">
-                    <option value="" selected>Choose Subject…</option>
-                    <option value="1">I have a suggestion</option>
-                    <option value="1">I found a bug</option>
-                    <option value="1">Other</option>
-                </select>
-            </label>
-        </p>
-
-        <p class="contact-input">
-            <textarea name="message" placeholder="Your Message…"></textarea>
-        </p>
-
-        <p class="contact-submit">
-            <input type="submit" value="Send Message">
-        </p>
-    </fieldset>
-</form>
-
-<!-- Footer-->
-<footer class="footer bg-light">
-    <div class="container">
+<section class="text-center about">
+    <h1>Our Services</h1>
+    <p class="font-weight-light mb-2">Get a bird’s eye view of your service desk performance</p>
+    <p class="font-weight-light mb-2">Get visibility into all your issue and track their progress with a quick glance at the dashboard.</p>
+    <p class="font-weight-light mb-2">Collaborate with your team from a single screen and know who’s working on a ticket, its priority, and status.</p>
+    <p class="font-weight-light mb-0">Auto-assign tickets to the right developer, and ensure no issue falls through the cracks with round-robin or load balancing auto-assignment</p>
+    <div class="container" style="margin-top: 40px;">
         <div class="row">
-            <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                <ul class="list-inline mb-2">
-                    <li class="list-inline-item"><a href="/about">About</a></li>
-                    <li class="list-inline-item">⋅</li>
-                    <li class="list-inline-item"><a href="/contact">Contact</a></li>
-                    <li class="list-inline-item">⋅</li>
-                    <li class="list-inline-item"><a href="/services">Services</a></li>
-                    <li class="list-inline-item">⋅</li>
-                </ul>
-                <p class="text-muted small mb-4 mb-lg-0">&copy; Issue Tracking System 2021. All Rights Reserved.</p>
+            <div class="col-lg-4" data-wow-offset="200" >
+                <h2 class="text-brown">SLA management</h2>
+                <p class="lead">Ensure on-time resolution by setting multiple SLA policies for task deadlines and automate escalation rules – based on different
+                    business hours or various types of tickets and ticket groups.</p>
             </div>
-            <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item me-4">
-                        <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                    </li>
-                    <li class="list-inline-item me-4">
-                        <a href="#!"><i class="bi-twitter fs-3"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#!"><i class="bi-instagram fs-3"></i></a>
-                    </li>
-                </ul>
+            <div class="col-lg-4" data-wow-offset="200">
+                <h2 class="text-brown">Satisfaction survey</h2>
+                <p class="lead">Drive service improvement with built-in satisfaction survey that can
+                    be automatically sent to employees upon ticket resolution, and measure your efficiency based on the CSAT reports.</p>
+            </div>
+            <div class="col-lg-4" data-wow-offset="200">
+                <h2 class="text-brown">Task management</h2>
+                <p class="lead">Stay on top of your daily tasks by viewing them from the service desk dashboard’s
+                    calendar view. Easily manage all that’s time-bound with automated notifications.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4" data-wow-offset="200" >
+                <h2 class="text-brown">Priority matrix</h2>
+                <p class="lead">Standardize prioritization of tickets to focus on the right tickets and quickly resolve major
+                    incidents. Specify the priority of tickets based on their impact and urgency, and automate incident prioritization.</p>
+            </div>
+            <div class="col-lg-4" data-wow-offset="200">
+                <h2 class="text-brown">Knowledge base</h2>
+                <p class="lead">Improve productivity by responding to similar requests with canned responses or knowledge base articles
+                    at the click of a button. Create solutions for your incidents and automatically convert it to articles.</p>
+            </div>
+            <div class="col-lg-4" data-wow-offset="200">
+                <h2 class="text-brown">Reporting</h2>
+                <p class="lead">Measure the performance of your incident management process with predefined and custom reports.
+                    Identify bottlenecks, make informed decisions, and monitor agent or team performance.</p>
             </div>
         </div>
     </div>
-</footer>
+</section>
+
+<section class="text-center about" style="margin-top: 20px;" >
+    <h1>Meet our team</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h3>Samrica Rajbhandari</h3>
+                <p>Software Developer</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>Friend 1</h3>
+                <p>Project Team Member</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>Friend 2</h3>
+                <p>Project Team Member</p>
+            </div>
+            <div class="col-lg-3">
+                <h3>Friend 3</h3>
+                <p>Project Team Member</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div style="height: 90px;">
+
+</div>
+
+
+
+<!-- Footer-->
+<footer th:replace="homefragment :: footer"/>
+
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->

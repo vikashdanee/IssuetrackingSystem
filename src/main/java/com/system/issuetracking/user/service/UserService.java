@@ -2,6 +2,7 @@ package com.system.issuetracking.user.service;
 
 
 import com.system.issuetracking.entity.CoreService;
+import com.system.issuetracking.user.model.Role;
 import com.system.issuetracking.user.model.User;
 
 import java.util.List;
@@ -18,5 +19,13 @@ public interface UserService extends CoreService<User> {
 
     User findById(long id);
 
+    List<User> findUsersByDestination(String destination);
+
+    User getUserByUsername(String email);
+
     User checkUserExist(User user);
+
+    List<Role> findAllRole();
+
+    Role findRoleByName(String role);
 }

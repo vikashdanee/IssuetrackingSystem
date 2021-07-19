@@ -1,115 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Skydash Admin</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="../css/feather.css">
-    <link rel="stylesheet" href="../css/themify-icons.css">
-    <link rel="stylesheet" href="../css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="../css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="../css/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="../css/select.dataTables.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="../css/dashstyle.css">
+<head th:replace="fragment :: html_head"/>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- endinject -->
-</head>
 <body>
 <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand" href="#"> ITS</a>
-        </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-            <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown">
-                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                        <i class="fa fa-bell-o mx-0"></i>
-                        <span class="count"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                        <a class="dropdown-item preview-item">
-                            <div class="preview-thumbnail">
-                                <div class="fa fa-envelope-o bg-success">
-                                    <i class="ti-info-alt mx-0"></i>
-                                </div>
-                            </div>
-                            <div class="preview-item-content">
-                                <h6 class="preview-subject font-weight-normal">New Notification</h6>
-                                <p class="font-weight-light small-text mb-0 text-muted">
-                                    Just now
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </li>
+    <nav th:replace="fragment :: header"/>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link count-indicator dropdown-toggle"  href="/setting" data-toggle="dropdown">
-                        <i class="fa fa-cog mx-0"></i>
-                        <span class="count"></span>
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link count-indicator dropdown-toggle"  href="/home" data-toggle="dropdown">
-                        <i class="fa fa-sign-out mx-0"></i>
-                        <span class="count"></span>
-                    </a>
-                </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                <span class="fa fa-align-justify"></span>
-            </button>
-        </div>
-    </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">
-                        <i class="fa fa-th-large menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <i class="fa fa-hourglass-start menu-icon"></i>
-                        <span class="menu-title">Issue Assigned</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <i class="fa fa-hourglass-half menu-icon"></i>
-                        <span class="menu-title">Issue In-Progress</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <i class="fa fa-hourglass-end menu-icon"></i>
-                        <span class="menu-title">Issue Completed</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users">
-                        <i class="fa fa-users menu-icon"></i>
-                        <span class="menu-title">User Management</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <nav th:replace="fragment :: menu"/>
+
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
@@ -117,7 +21,7 @@
                     <div class="col-md-12 grid-margin">
                         <div class="row">
                             <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                                <h3 class="font-weight-bold">Welcome Samrica,</h3>
+                                <h3 class="font-weight-bold">Welcome [[${#httpServletRequest.remoteUser}]],</h3>
                                 <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 issue pending!</span></h6>
                             </div>
                             <div class="col-12 col-xl-4">
@@ -398,43 +302,11 @@
                     </div>
                 </div>
             </div>
-            <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
-                </div>
-            </footer>
-            <!-- partial -->
+
+            <footer th:replace="fragment :: footer"/>
         </div>
-        <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
 </div>
-<!-- container-scroller -->
-
-<!-- plugins:js -->
-<script src="js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page -->
-<script src="js/Chart.min.js"></script>
-<script src="js/jquery.dataTables.js"></script>
-<script src="js/dataTables.bootstrap4.js"></script>
-<script src="js/dataTables.select.min.js"></script>
-
-<!-- End plugin js for this page -->
-<!-- inject:js -->
-<script src="js/off-canvas.js"></script>
-<script src="js/hoverable-collapse.js"></script>
-<script src="js/template.js"></script>
-<script src="js/settings.js"></script>
-<script src="js/todolist.js"></script>
-<!-- endinject -->
-<!-- Custom js for this page-->
-<script src="js/dashboard.js"></script>
-<script src="js/Chart.roundedBarCharts.js"></script>
-<!-- End custom js for this page-->
 </body>
 
 </html>

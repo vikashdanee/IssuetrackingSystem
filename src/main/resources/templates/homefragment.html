@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="html_head">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -12,56 +12,22 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 <!-- Navigation-->
-
-
-<nav class="navbar navbar-light bg-light static-top">
+<nav class="navbar navbar-light bg-light static-top" th:fragment="header">
     <div class="container">
         <a class="navbar-brand" href="#!">Issue Tracking System</a>
+        <a class="btn btn-primary" href="/login">Log In</a>
     </div>
 </nav>
-<!-- Masthead-->
-<header class="masthead">
-    <div class="container position-relative">
-        <div class="row justify-content-center">
-            <div class="container">
-                <div class="login-container">
-                    <div id="output"></div>
-                    <div class="avatar"></div>
-                    <div class="form-box">
-                        <div th:if="${msg != null}">
-                            <span style="color: red" th:text="${msg}"/>
-                        </div>
-                        <form class="form-signin" action="/login" method="post" th:object="${user}" th:action="@{/login}">
-                                <span id="reauth-email" class="reauth-email"></span>
-                                <input type="email"
-                                       class="form-control"
-                                       name="email"
-                                       placeholder="Email address"
-                                       required autofocus>
-                                <input type="password"
-                                       class="form-control"
-                                       name="password"
-                                       placeholder="Password"
-                                       required>
-                                <div id="remember" class="checkbox">
-                                </div>
-                                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Log in</button>
-                            </form><!-- /form -->
-                            <a href="#" class="forgot-password">
-                                Forgot the password?
-                            </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+
 
 <!-- Footer-->
-<footer class="footer bg-light">
+<footer class="footer bg-light" th:fragment="footer">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
@@ -102,4 +68,5 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
+
 

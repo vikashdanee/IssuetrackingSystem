@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment :: html_head"/>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav th:replace="fragment :: header"/>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav th:replace="fragment :: menu"/>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <form action="#" method="post" th:object="${issue}" th:action="@{/issues/issue-detail-update}">
+                    <div class="row">
+                        <div class="col-md-8 grid-margin stretch-card">
+                            <div class="card tale-bg">
+                                <div class="row">
+                                <div class="col-md-12 grid-margin">
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-12 grid-margin">
+                                    <p class="card-title m15-left">Title</p>
+                                    <p class="mb-2 mb-xl-0 m15-left" th:text="*{title}"/>
+                                </div>
+                                <div class="col-md-12 grid-margin">
+                                    <p class="card-title m15-left">Purpose of Request</p>
+                                    <p class="mb-2 mb-xl-0 m15-left" th:text="*{purposeOfReq}"/>
+                                </div>
+                                <div class="col-md-12 grid-margin">
+                                    <p class="card-title m15-left">Design Detail</p>
+                                    <p class="mb-2 mb-xl-0 m15-left" th:text="*{designDetail}"/>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="row card tale-bg">
+                                <div class="row">
+                                    <div class="col-lg-12 grid-margin">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left"> Request #: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="*{requestNo}"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left"> Module: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="*{systemModule}"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left"> Work Type: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="*{workType}"></label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left"> Priority: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="*{priority}"></label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left"> Assigned To: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="*{assignTo.firstName}"></label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left"> Status: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="*{status}"></label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="m15-left">Due Date: </label>
+                                    </div>
+                                    <div class="col-lg-6 mb-2 grid-margin">
+                                        <label class="text-i" th:text="${#dates.format(issue.notLaterThan, 'dd-MMM-yyyy')}"></label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="#" method="post" modelAttribute="comment" th:action="@{/issues/add-comment/{id}(id = ${issue.id})}">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <textarea class="form-control" cols="180" rows="6" name="comment" type="text" required></textarea>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Add Comment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-borderless">
+                                            <thead>
+                                            <tr>
+                                                <th>Comments:</th>
+                                                <th>Commented By</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr th:class="${iterStat.odd}? 'table-info':'table-light'" th:each="comment,iterStat : ${comments}">
+                                                <td class="w-100 px-0">
+                                                    <label class="m15-left" th:text="${comment.comment}"/>
+                                                </td>
+                                                <td class="w-100 px-0">
+                                                    - <label th:text="${comment.commentBy}"/>
+                                                </td>
+                                                <td>
+                                                    <a th:if="${user.email} eq ${comment.commentBy}"
+                                                       th:href="@{'/issues/delete-comment/' + ${issue.id}+'/'+${comment.id}}">
+                                                        <i class="fa fa-trash menu-icon"></i>
+                                                        <span> Delete</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+
+            <footer th:replace="fragment :: footer"/>
+
+            </div>
+
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment :: html_head"/>
+
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav th:replace="fragment :: header"/>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav th:replace="fragment :: menu"/>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <form method="post" th:object="${issue}" th:action="@{/issues/issue-update/{id}(id = ${issue.id})}">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <textarea class="form-control" cols="90" rows="2" id="title" th:field="*{title}" type="text" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="purposeOfReq">Purpose of Request</label>
+                            <textarea class="form-control" cols="90" rows="4" id="purposeOfReq" th:field="*{purposeOfReq}" type="text" required></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="designDetail">Design Detail</label>
+                            <textarea class="form-control" cols="90" rows="6" id="designDetail" th:field="*{designDetail}" type="text" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label> Project Module </label>
+                            <div>
+                                <select class="select" th:field="*{systemModule}">
+                                    <option value="project A">project A</option>
+                                    <option value="project B">project B</option>
+                                    <option value="project C">project C</option>
+                                    <option value="project D">project D</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Work Type </label>
+                            <div>
+                                <select class="select" th:field="*{workType}">
+                                    <option value="maintenance">Maintenance</option>
+                                    <option value="development">Development</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Priority</label>
+                            <div>
+                                <select class="select"  th:field="*{priority}">
+                                    <option value="SHOWSTOPPER">Showstopper</option>
+                                    <option value="CRITICAL">Critical</option>
+                                    <option value="MAJOR">Major</option>
+                                    <option value="NORMAL">Normal</option>
+                                    <option value="MINOR">Minor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Assigned To</label>
+                            <div>
+                                <select class="select"  th:field="*{assignTo}">
+                                    <option th:each="user,iterStat : ${users}" th:value="${user}" th:text="${user.firstName}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="notLaterThan">Due Date</label>
+                            <input type="date" class="form-control" id="notLaterThan" autocomplete="off" th:field="*{notLaterThan}" required/>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </form>
+
+            </div>
+
+            <footer th:replace="fragment :: footer"/>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+</body>
+
+</html>
+
+
+
+

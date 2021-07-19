@@ -1,57 +1,71 @@
 package com.system.issuetracking.user.model;
 
 import com.system.issuetracking.enums.UserType;
+import com.system.issuetracking.issue.model.Issue;
+import com.system.issuetracking.issue.model.IssueComment;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
-/**
- * @author Sunil Babu Shrestha on 3/18/2020
- */
+
 @Entity
 @Data
+@Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String password;
-    private String email;
-    private UserType userType;
-    
-	public Long getId() {
-		return id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(nullable = false, unique = true, length = 45)
+	private String email;
+
+	@Column(nullable = false, length = 64)
+	private String password;
+
+	@Column(name = "first_name", nullable = false, length = 40)
+	private String firstName;
+
+	@Column(name = "last_name", nullable = false, length = 40)
+	private String lastName;
+
+	@Column
+	private String designation;
+
+	@Column
+	private String userRole;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id")
+	)
+	private Set<Role> roles = new HashSet<>();
+
+	public void addRole(Role role) {
+		this.roles.add(role);
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return Objects.equals(id, user.id) &&
+				Objects.equals(email, user.email) &&
+				Objects.equals(password, user.password) &&
+				Objects.equals(firstName, user.firstName) &&
+				Objects.equals(lastName, user.lastName) &&
+				Objects.equals(designation, user.designation) &&
+				Objects.equals(roles, user.roles);
 	}
-	public String getName() {
-		return name;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, email, password, firstName, lastName, designation, roles);
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public UserType getUserType() {
-		return userType;
-	}
-	public void setUserType(UserType userType) {
-		this.userType = userType;
-	}
-    
-    
 }

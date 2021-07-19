@@ -28275,13 +28275,13 @@ div.tagsinput span.tag a {
 }
 
 .navbar .navbar-brand-wrapper {
-  background: #ffffff;
+  background: #007bff40;
   transition: width 0.25s ease, background 0.25s ease;
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;
   width: 235px;
-  height: 60px;
+  height: 80px;
 }
 
 .sidebar-dark .navbar .navbar-brand-wrapper {
@@ -28322,7 +28322,7 @@ div.tagsinput span.tag a {
 }
 
 .navbar .navbar-menu-wrapper {
-  background: #ffffff;
+  background: #007bff40;
   transition: width 0.25s ease;
   -webkit-transition: width 0.25s ease;
   -moz-transition: width 0.25s ease;
@@ -28331,7 +28331,7 @@ div.tagsinput span.tag a {
   padding-right: 2.375rem;
   padding-left: 2.375rem;
   width: calc(100% - 235px);
-  height: 60px;
+  height: 80px;
 }
 
 @media (max-width: 991px) {
@@ -30075,6 +30075,41 @@ div.tagsinput span.tag a {
   #settings-trigger {
     display: none;
   }
+}
+
+.dot {
+    height: 35px;
+    width: 35px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-flex; /* or inline-flex */
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+}
+
+.m5-left{
+    margin-left: 5px;
+}
+
+.m15-left{
+    margin-left: 15px;
+}
+
+.m40-left{
+    margin-left: 40px;
+}
+
+.text-i{
+    font-style: italic;
+}
+
+.text-u{
+    text-decoration: underline;
+}
+
+.display-i{
+    display: inline;
 }
 
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
