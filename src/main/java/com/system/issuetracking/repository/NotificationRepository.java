@@ -19,5 +19,5 @@ public interface NotificationRepository extends JpaRepository<UserNotification, 
     List<UserNotification> getNotifications(@Param("user") User user,@Param("stillActive") boolean stillActive);
 
     @Query("SELECT n FROM UserNotification  n where n.issueId = :id and n.user = :user and n.stillActive = :stillActive")
-    UserNotification getNotification(@Param("id") Long id,@Param("user") User user,@Param("stillActive") boolean stillActive);
+    List<UserNotification> getNotification(@Param("id") Long id,@Param("user") User user,@Param("stillActive") boolean stillActive);
 }

@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -47,13 +48,13 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    private String getSaveUser(@ModelAttribute User user, ModelMap map){
+    private String getSaveUser(@ModelAttribute User user, ModelMap map) throws MessagingException {
         /* check if userrole is null */
         if(user.getUserRole()==null)
             user.setUserRole("User");
         Role roleUser = userService.findRoleByName(user.getUserRole());
         user.addRole(roleUser);
-        user = userService.save(user);
+        user = userService.saveNewUser(user);
         if(user !=null){
             map.put("msg",SUCCESS_MESSAGE);
             return "redirect:/users";

@@ -5,13 +5,16 @@ import com.system.issuetracking.entity.CoreService;
 import com.system.issuetracking.user.model.Role;
 import com.system.issuetracking.user.model.User;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
  * @author Sunil Babu Shrestha on 3/18/2020
  */
 public interface UserService extends CoreService<User> {
-    User save(User event);
+    User save(User user);
+
+    User saveNewUser(User user) throws MessagingException;
 
     List<User> findAll();
 

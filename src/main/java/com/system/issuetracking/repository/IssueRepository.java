@@ -21,6 +21,12 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     @Query("SELECT i FROM Issue  i where i.assignTo = :user and i.status = :status order by i.requestNo asc")
     List<Issue> getIssuesByUserAndStatus(@Param("user") User user,@Param("status") String status);
 
+    @Query("SELECT i FROM Issue  i where i.assignTo = :user and i.priority = :priority order by i.requestNo asc")
+    List<Issue> getIssuesByUserAndPriority(@Param("user") User user,@Param("priority") String priority);
+
+    @Query("SELECT i FROM Issue  i where i.priority = :priority order by i.requestNo asc")
+    List<Issue> getIssuesByPriority(@Param("priority") String priority);
+
     @Query("SELECT i FROM Issue  i where i.requestNo = :requestNo")
     Issue getIssueByRequestNo(@Param("requestNo") int requestNo);
 

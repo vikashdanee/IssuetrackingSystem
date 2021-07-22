@@ -20,6 +20,10 @@ public interface IssueService extends CoreService<Issue> {
 
     List<Issue> findAllIssueByUserAndStatus(User user, String status);
 
+    List<Issue> findAllIssueByUserAndPriority(User user, String priority);
+
+    List<Issue> findAllIssueByPriority(String priority);
+
     List<Issue> findAllIssueByStatus(String status);
 
     List<UserNotification> findUserNotification(User user, boolean stillActive);
@@ -32,7 +36,13 @@ public interface IssueService extends CoreService<Issue> {
 
     Issue update(Issue issue) throws MessagingException;
 
-    UserNotification findNotificationByIssueId(Long id,User user, boolean stillActive);
+    Issue maskAsCompleted(Issue issue) throws MessagingException;
+
+    Issue reAssigned(Issue issue) throws MessagingException;
+
+    Issue maskAsTest(Issue issue) throws MessagingException;
+
+    List<UserNotification> findNotificationByIssueId(Long id,User user, boolean stillActive);
 
     UserNotification saveNotification(UserNotification userNotification);
 

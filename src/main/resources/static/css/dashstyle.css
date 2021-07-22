@@ -30108,6 +30108,15 @@ div.tagsinput span.tag a {
     text-decoration: underline;
 }
 
+
+.text-green{
+   color: green;
+}
+
+.text-blue{
+   color: blue;
+}
+
 .display-i{
     display: inline;
 }

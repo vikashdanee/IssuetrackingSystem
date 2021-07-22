@@ -30,6 +30,7 @@ import java.util.List;
 @Controller
 @RequestMapping(IssueController.URI)
 @AllArgsConstructor
+@SuppressWarnings("Duplicates")
 public class IssueController {
 
     public static final String URI = "/issues";
@@ -77,6 +78,11 @@ public class IssueController {
                     map.put("issues", issues);
                     return "issues";
 
+            case "approved":
+                issues = issueService.findAllIssueByUserAndStatus(user,"Approved");
+                map.put("issues", issues);
+                return "issues";
+
             default:
                 issues = issueService.findAllIssue();
                 map.put("issues", issues);
@@ -93,8 +99,8 @@ public class IssueController {
     public String getIssueDetailPage(@PathVariable Long id,Model model) {
         User user = getLoggedUser();
         Issue issue = issueService.findById(id);
-        UserNotification userNotification = issueService.findNotificationByIssueId(id,user,true);
-        if(userNotification!=null){
+        List<UserNotification> notifications = issueService.findNotificationByIssueId(id,user,true);
+        for(UserNotification userNotification:notifications){
             userNotification.setStillActive(false);
             issueService.saveNotification(userNotification);
         }
@@ -131,6 +137,70 @@ public class IssueController {
         existedIssue.setNotLaterThan(issue.getNotLaterThan());
         issueService.update(existedIssue);
         return "redirect:/issues";
+    }
+
+    @GetMapping("/mark-as-inprogress/{id}")
+    public String markIssueAsInProgress(@PathVariable Long id,Model model) throws MessagingException {
+        User user = getLoggedUser();
+        Issue issue = issueService.findById(id);
+        issue.setStatus("In-progress");
+        issue = issueService.update(issue);
+
+        List<IssueComment> comments = issueService.findAllIssueComments(issue);
+        List<UserNotification> userNotifications = issueService.findUserNotification(user,true);
+        model.addAttribute("userNotifications", userNotifications);
+        model.addAttribute("issue", issue);
+        model.addAttribute("comments", comments);
+        model.addAttribute("user",user);
+        return "issuedetail";
+    }
+
+    @GetMapping("/mark-as-testing/{id}")
+    public String markIssueAsUnderTest(@PathVariable Long id,Model model) throws MessagingException {
+        User user = getLoggedUser();
+        Issue issue = issueService.findById(id);
+        issue.setStatus("Completed");
+        issue = issueService.maskAsTest(issue);
+
+        List<IssueComment> comments = issueService.findAllIssueComments(issue);
+        List<UserNotification> userNotifications = issueService.findUserNotification(user,true);
+        model.addAttribute("userNotifications", userNotifications);
+        model.addAttribute("issue", issue);
+        model.addAttribute("comments", comments);
+        model.addAttribute("user",user);
+        return "issuedetail";
+    }
+
+    @GetMapping("/mark-as-incomplete/{id}")
+    public String markIssueAsReAssigned(@PathVariable Long id,Model model) throws MessagingException {
+        User user = getLoggedUser();
+        Issue issue = issueService.findById(id);
+        issue.setStatus("Assigned");
+        issue = issueService.reAssigned(issue);
+
+        List<IssueComment> comments = issueService.findAllIssueComments(issue);
+        List<UserNotification> userNotifications = issueService.findUserNotification(user,true);
+        model.addAttribute("userNotifications", userNotifications);
+        model.addAttribute("issue", issue);
+        model.addAttribute("comments", comments);
+        model.addAttribute("user",user);
+        return "issuedetail";
+    }
+
+    @GetMapping("/mark-as-complete/{id}")
+    public String markIssueAsCompleted(@PathVariable Long id,Model model) throws MessagingException {
+        User user = getLoggedUser();
+        Issue issue = issueService.findById(id);
+        issue.setStatus("Approved");
+        issue = issueService.maskAsCompleted(issue);
+
+        List<IssueComment> comments = issueService.findAllIssueComments(issue);
+        List<UserNotification> userNotifications = issueService.findUserNotification(user,true);
+        model.addAttribute("userNotifications", userNotifications);
+        model.addAttribute("issue", issue);
+        model.addAttribute("comments", comments);
+        model.addAttribute("user",user);
+        return "issuedetail";
     }
 
     @PostMapping("/issue")
@@ -175,6 +245,30 @@ public class IssueController {
         model.addAttribute("comments", comments);
         model.addAttribute("user",user);
         if(comment !=null){
+            map.put("msg","Comment successfully added.");
+            return "issuedetail";
+        }
+        else {
+            map.put("msg","No Developer is available at this time");
+            return "issuedetail";
+        }
+    }
+
+    @PostMapping("/update-percentage/{id}")
+    private String addIssuePercentage(@PathVariable Long id, @ModelAttribute Issue issue, ModelMap map,Model model) throws MessagingException {
+        User user = getLoggedUser();
+        Issue savedIssue = issueService.findById(id);
+        savedIssue.setRemedyMadeExplanation(issue.getRemedyMadeExplanation());
+        savedIssue.setPercentageComplete(issue.getPercentageComplete());
+
+        savedIssue = issueService.update(savedIssue);
+        List<UserNotification> userNotifications = issueService.findUserNotification(user,true);
+        model.addAttribute("userNotifications", userNotifications);
+        List<IssueComment> comments = issueService.findAllIssueComments(savedIssue);
+        model.addAttribute("issue", savedIssue);
+        model.addAttribute("comments", comments);
+        model.addAttribute("user",user);
+        if(savedIssue !=null){
             map.put("msg","Comment successfully added.");
             return "issuedetail";
         }

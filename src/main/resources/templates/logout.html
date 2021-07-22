@@ -31,28 +31,13 @@
                     <div id="output"></div>
                     <div class="avatar"></div>
                     <div class="form-box">
-                        <div th:if="${msg != null}">
-                            <span style="color: red" th:text="${msg}"/>
+                        <div>
+                            <span style="color: green">You have been logged Out from system!</span>
                         </div>
-                        <form class="form-signin" action="/login" method="post" th:object="${user}" th:action="@{/login}">
-                                <span id="reauth-email" class="reauth-email"></span>
-                                <input type="email"
-                                       class="form-control"
-                                       name="email"
-                                       placeholder="Email address"
-                                       required autofocus>
-                                <input type="password"
-                                       class="form-control"
-                                       name="password"
-                                       placeholder="Password"
-                                       required>
-                                <div id="remember" class="checkbox">
-                                </div>
-                                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Log in</button>
-                            </form><!-- /form -->
-                            <a href="/reset_password" class="forgot-password">
-                                Forgot the password?
-                            </a>
+
+                        <div>
+                            <h1 class="text-primary">SEE YOU SOON....</h1>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,4 +87,5 @@
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
+
 

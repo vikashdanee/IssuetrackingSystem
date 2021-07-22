@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymleaf-extras-springsecurity5">
 
 <head th:replace="fragment :: html_head"/>
 
@@ -36,6 +37,35 @@
                                     <p class="card-title m15-left">Design Detail</p>
                                     <p class="mb-2 mb-xl-0 m15-left" th:text="*{designDetail}"/>
                                 </div>
+                                    <div class="col-md-12 grid-margin">
+                                        <p class="card-title m15-left"></p>
+                                    </div>
+                                    <div class="col-md-12 grid-margin">
+                                        <p class="card-title m15-left">
+                                            <a th:if="'Assigned' eq ${issue.status}"
+                                               th:href="@{'/issues/mark-as-inprogress/' + ${issue.id}}">
+                                                <i class="fa fa-play-circle menu-icon text-blue"></i>
+                                                <span class="text-blue"> Mark As In-progress</span>
+                                            </a>
+                                            <a th:if="'In-progress' eq ${issue.status}"
+                                               th:href="@{'/issues/mark-as-testing/' + ${issue.id}}">
+                                                <i class="fa fa-paper-plane menu-icon text-green"></i>
+                                                <span class="text-green"> Send For Testing</span>
+                                            </a>
+                                            <a sec:authorize="hasAuthority('Admin')"
+                                               th:if="'Completed' eq ${issue.status}"
+                                               th:href="@{'/issues/mark-as-incomplete/' + ${issue.id}}">
+                                                <i class="fa fa-thumbs-o-down menu-icon text-brown"></i>
+                                                <span class="text-green"> Re-Assigned</span>
+                                            </a>
+                                            <a sec:authorize="hasAuthority('Admin')"
+                                               th:if="'Completed' eq ${issue.status}"
+                                               th:href="@{'/issues/mark-as-complete/' + ${issue.id}}">
+                                                <i class="fa fa-thumbs-o-up menu-icon text-green"></i>
+                                                <span class="text-green"> Mark As Complete</span>
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +141,31 @@
                     </div>
                 </form>
 
-                <form action="#" method="post" modelAttribute="comment" th:action="@{/issues/add-comment/{id}(id = ${issue.id})}">
+                <form action="#" method="post" th:object="${issue}" th:action="@{/issues/update-percentage/{id}(id = ${issue.id})}">
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Explanation of Solution:</label>
+                                            <textarea class="form-control" cols="180" rows="6" th:field="*{remedyMadeExplanation}" type="text"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Percentage Completed</label>
+                                            <input class="form-control" id="firstName" th:field="*{percentageComplete}" type="text">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="#" method="post" modelAttribute="comment" th:action="@{/issues/add-/{id}(id = ${issue.id})}">
                     <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">

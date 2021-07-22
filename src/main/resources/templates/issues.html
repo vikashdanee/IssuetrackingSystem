@@ -16,7 +16,7 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
-                <div class="row">
+                <div class="row" sec:authorize="hasAuthority('Admin')">
                     <a href="/issues/issue">Create New Issue</a>
                 </div>
                 <div class="table-responsive">
@@ -52,7 +52,16 @@
                                 </div>
                             </td>
                             <td class="font-weight-medium">
-                                <div class="badge badge-success">
+                                <div  th:if="'Completed' eq ${issue.status}" class="badge badge-info">
+                                    <label th:text="${issue.status}"/>
+                                </div>
+                                <div  th:if="'In-progress' eq ${issue.status}" class="badge badge-warning">
+                                    <label th:text="${issue.status}"/>
+                                </div>
+                                <div  th:if="'Assigned' eq ${issue.status}" class="badge badge-danger">
+                                    <label th:text="${issue.status}"/>
+                                </div>
+                                <div  th:if="'Approved' eq ${issue.status}" class="badge badge-success">
                                     <label th:text="${issue.status}"/>
                                 </div>
                             </td>

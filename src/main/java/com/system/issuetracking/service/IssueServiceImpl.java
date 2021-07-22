@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -56,7 +57,7 @@ public class IssueServiceImpl implements IssueService{
        issue.setStatus("Assigned");
         Issue savedIssue = issueRepository.save(issue);
             sendNotification(savedIssue,"assigned to you.");
-            storeNotification(savedIssue,false);
+            storeNotification(savedIssue,"assigned.");
             return savedIssue;
         }
         return null;
@@ -74,12 +75,26 @@ public class IssueServiceImpl implements IssueService{
 
     @Override
     public List<Issue> findAllIssueByUserAndStatus(User user, String status) {
-        return issueRepository.getIssuesByUserAndStatus(user,status);
+        List<Issue> issues=issueRepository.getIssuesByUserAndStatus(user,status);
+        return issues==null?new ArrayList<>():issues;
+    }
+
+    @Override
+    public List<Issue> findAllIssueByUserAndPriority(User user, String priority) {
+        List<Issue> issues=issueRepository.getIssuesByUserAndPriority(user,priority);
+        return issues==null?new ArrayList<>():issues;
+    }
+
+    @Override
+    public List<Issue> findAllIssueByPriority(String priority) {
+        List<Issue> issues=issueRepository.getIssuesByPriority(priority);
+        return issues==null?new ArrayList<>():issues;
     }
 
     @Override
     public List<Issue> findAllIssueByStatus(String status) {
-        return issueRepository.getIssuesByStatus(status);
+        List<Issue> issues=issueRepository.getIssuesByStatus(status);
+        return issues==null?new ArrayList<>():issues;
     }
 
     @Override
@@ -106,12 +121,35 @@ public class IssueServiceImpl implements IssueService{
     public Issue update(Issue issue) throws MessagingException {
         Issue savedIssue = issueRepository.save(issue);
         sendNotification(savedIssue,"updated.");
-        storeNotification(savedIssue,true);
+        storeNotification(savedIssue,"updated");
         return savedIssue;
     }
 
     @Override
-    public UserNotification findNotificationByIssueId(Long id,User user, boolean stillActive) {
+    public Issue maskAsCompleted(Issue issue) throws MessagingException {
+        Issue savedIssue = issueRepository.save(issue);
+        sendNotification(savedIssue,"completed.");
+        storeNotification(savedIssue,"completed");
+        return savedIssue;
+    }
+
+    @Override
+    public Issue reAssigned(Issue issue) throws MessagingException {
+        Issue savedIssue = issueRepository.save(issue);
+        sendNotification(savedIssue,"reassigned.");
+        storeNotification(savedIssue,"reassigned.");
+        return savedIssue;
+    }
+
+    @Override
+    public Issue maskAsTest(Issue issue) throws MessagingException {
+        Issue savedIssue = issueRepository.save(issue);
+        sendNotification(savedIssue,"marked as tested.");
+        return savedIssue;
+    }
+
+    @Override
+    public List<UserNotification> findNotificationByIssueId(Long id,User user, boolean stillActive) {
         return notificationRepository.getNotification(id,user,stillActive);
     }
 
@@ -150,13 +188,10 @@ public class IssueServiceImpl implements IssueService{
         javaMailSender.send(msg);
     }
 
-    public void storeNotification(Issue issue,boolean update){
+    public void storeNotification(Issue issue,String action){
         UserNotification userNotification = new UserNotification();
         userNotification.setDate(new Date());
-        if(update)
-            userNotification.setNotification("Issue IT-"+issue.getRequestNo()+" has been updated.");
-        else
-            userNotification.setNotification("New Issue IT-"+issue.getRequestNo()+" assigned to you.");
+        userNotification.setNotification("Issue IT-"+issue.getRequestNo()+" has been "+action);
         userNotification.setStillActive(true);
         userNotification.setUser(issue.getAssignTo());
         userNotification.setIssueId(issue.getId());

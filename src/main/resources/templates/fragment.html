@@ -118,19 +118,25 @@
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('User')">
                     <a class="nav-link" href="/issues/assigned">
-                        <i class="fa fa-hourglass-start menu-icon"></i>
+                        <i class="fa fa-hourglass-o menu-icon"></i>
                         <span class="menu-title">Issue Assigned</span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('User')">
                     <a class="nav-link" href="/issues/in-progress">
-                        <i class="fa fa-hourglass-half menu-icon"></i>
+                        <i class="fa fa-hourglass-start menu-icon"></i>
                         <span class="menu-title">Issue In-Progress</span>
                     </a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAuthority('User')">
                     <a class="nav-link" href="/issues/completed">
                         <i class="fa fa-hourglass-end menu-icon"></i>
+                        <span class="menu-title">Issue Under-Test</span>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('User')">
+                    <a class="nav-link" href="/issues/approved">
+                        <i class="fa fa-hourglass menu-icon"></i>
                         <span class="menu-title">Issue Completed</span>
                     </a>
                 </li>
