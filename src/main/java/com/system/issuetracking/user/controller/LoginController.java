@@ -62,8 +62,7 @@ public class LoginController {
         if (null != newUser) {
             Random random = new Random();
             String rawPassword = String.valueOf(random.nextInt(100000));
-            String encryptedPassword = passwordEncoder.encode(rawPassword);
-            newUser.setPassword(encryptedPassword);
+            newUser.setPassword(rawPassword);
             userService.save(newUser);
             sendNotification(user,rawPassword);
             map.put("msg", "Temporary password is send to the entered email address!");
